@@ -52,6 +52,38 @@
                 console.log(err)
             })
         })
+        const login = document.getElementById("loginbtn")
+
+        login.addEventListener("click",(e)=>{
+            e.preventDefault()
+
+            fetch("https://wild-rose-caterpillar-tutu.cyclic.app/users/login",{
+                method:"POST",
+                headers:{
+                    "Content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    email:document.getElementById("log_email").value,
+                    password:document.getElementById("log_password").value,
+                    
+                })
+            }).then((res)=>{
+                if(!res.ok){
+                    window.alert("please enter info")
+                }else{
+                    window.alert("user registerd")
+                }
+                
+            })
+            .then((data)=>{
+                window.location.reload()
+                localStorage.setItem("token", data.access_token)
+                location.href="./postdashboard.html"
+            }).catch((err)=>{
+                console.log(err)
+            })
+        })
+        
     </script>
 
 
