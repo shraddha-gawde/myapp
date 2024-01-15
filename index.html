@@ -16,8 +16,8 @@
     </form>
     <form action="">
         <input id="log_email" type="text" placeholder="user email"/>
-        <input id="log_password" type="text" placeholder="password"/>
-       
+        <input id="log_password" type="password" placeholder="password"/>
+       <a href=""></a>
         <button id="loginbtn" type="submit">login</button>
     </form>
     <script>
@@ -53,36 +53,36 @@
             })
         })
         const login = document.getElementById("loginbtn")
+        login.addEventListener("click", (e) => {
+    e.preventDefault();
 
-        login.addEventListener("click",(e)=>{
-            e.preventDefault()
+    fetch("https://wild-rose-caterpillar-tutu.cyclic.app/users/login", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            email: document.getElementById("log_email").value,
+            password: document.getElementById("log_password").value,
+        }),
+    })
+    .then((response) => {
+        if (!response.ok) {
+            window.alert("please enter right credintials");
+        }
+        
+        return response.json();
+    })
+    .then((data) => {
+        console.log(data);
 
-            fetch("https://wild-rose-caterpillar-tutu.cyclic.app/users/login",{
-                method:"POST",
-                headers:{
-                    "Content-type":"application/json"
-                },
-                body:JSON.stringify({
-                    email:document.getElementById("log_email").value,
-                    password:document.getElementById("log_password").value,
-                    
-                })
-            }).then((res)=>{
-                if(!res.ok){
-                    window.alert("please enter info")
-                }else{
-                    window.alert("user registerd")
-                }
-                
-            })
-            .then((data)=>{
-                window.location.reload()
-                localStorage.setItem("token", data.access_token)
-                location.href="./postdashboard.html"
-            }).catch((err)=>{
-                console.log(err)
-            })
-        })
+        localStorage.setItem("token", data.access_token);
+        location.href = "./postdashboard.html";
+    })
+    .catch((err) => {
+        console.log(err.message);
+    });
+});
         
     </script>
 
