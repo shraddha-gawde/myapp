@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <input id="reg_name" type="text" placeholder="username"/>
+        <input id="reg_email" type="text" placeholder="user email"/>
+        <input id="reg_password" type="password" placeholder="password"/>
+        <input id="reg_age" type="number" placeholder="age"/>
+        <input id="reg_city" type="text" placeholder="city"/>
+        <button id="registerbtn" type="submit">register</button>
+    </form>
+    <form action="">
+        <input id="log_email" type="text" placeholder="user email"/>
+        <input id="log_password" type="text" placeholder="password"/>
+       
+        <button id="loginbtn" type="submit">login</button>
+    </form>
+    <script>
+        const register = document.getElementById("registerbtn")
+
+        register.addEventListener("click",(e)=>{
+            e.preventDefault()
+
+            fetch("https://wild-rose-caterpillar-tutu.cyclic.app/users/register",{
+                method:"POST",
+                headers:{
+                    "Content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    name:document.getElementById("reg_name").value,
+                    email:document.getElementById("reg_email").value,
+                    password:document.getElementById("reg_password").value,
+                    age:document.getElementById("reg_age").value,
+                    city:document.getElementById("reg_city").value,
+                })
+            }).then((res)=>{
+                if(!res.ok){
+                    window.alert("please enter info")
+                }else{
+                    window.alert("user registerd")
+                }
+                
+            })
+            .then((data)=>{
+                window.location.reload()
+            }).catch((err)=>{
+                console.log(err)
+            })
+        })
+    </script>
+
+
+</body>
+</html>
